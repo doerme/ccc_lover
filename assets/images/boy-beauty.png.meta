@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "c0ae3095-d7eb-4fde-bbdd-abfac77578c8",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "boy-beauty": {
+      "ver": "1.0.3",
+      "uuid": "154e85c6-88ec-446b-a58e-93a336569136",
+      "rawTextureUuid": "c0ae3095-d7eb-4fde-bbdd-abfac77578c8",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 115,
+      "height": 170,
+      "rawWidth": 115,
+      "rawHeight": 170,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
