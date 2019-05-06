@@ -49,8 +49,77 @@ export default class NewClass extends cc.Component {
     })
     ui_girl: cc.Node = null;
 
-    
+    @property({
+        type: cc.Node
+    })
+    boy_left_head: cc.Node = null;
 
+    @property({
+        type: cc.Node
+    })
+    boy_right_head: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    boy_mask: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    girl_left_head: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    girl_right_head: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    girl_mask: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    curtain_block: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    mycoin: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    confirm_block: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    coin_bt: Array<cc.Node> = []
+
+    @property({
+        type: cc.SpriteFrame
+    })
+    girl_good: cc.SpriteFrame = null;
+
+    @property({
+        type: cc.SpriteFrame
+    })
+    girl_bad: cc.SpriteFrame = null;
+
+    @property({
+        type: cc.SpriteFrame
+    })
+    boy_good: cc.SpriteFrame = null;
+
+    @property({
+        type: cc.SpriteFrame
+    })
+    boy_bad: cc.SpriteFrame = null;
+
+    
     @property
     text: string = 'hello';
 
@@ -60,15 +129,32 @@ export default class NewClass extends cc.Component {
     // 当前回合胜利值 1.左 2.右
     curwin: number
 
+    // 当前下注金额
+    curcoinnum: number = 1
+
+    // 我的金币
+    minecoinnum: number = 1000
+
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
 
     start () {
-
+        this.mycoin.getComponent(cc.Label).string = this.minecoinnum.toString()
     }
 
     // update (dt) {}
+
+    // 选择下注金额
+    selectCoinNum(e:any, customEventData: string): void {
+        console.log(e, customEventData)
+        const selindex = customEventData === '1' ? 0 : customEventData === '10' ? 1 : 2
+        this.curcoinnum = Number(customEventData)
+        this.coin_bt.forEach(item => {
+            item.opacity = 128
+        })
+        this.coin_bt[selindex].opacity = 255
+    }
 
     // 选择性别
     selectSex (e:any, customEventData: string): void {
@@ -80,13 +166,14 @@ export default class NewClass extends cc.Component {
 
     // 游戏开始
     gameInit (selectSex: string):void {
+        this.curtain_block.getComponent(cc.Animation).play('curtain_up');
         if(selectSex === '1') {
             this.cur_sex_boy.active = true
-            this.ui_boy.active = true
+            this.ui_girl.active = true
         }else{
             this.cur_sex_girl.active = true
             this.cur_sex_color.color = new cc.Color(208,47,106) //(208,47,106)
-            this.ui_girl.active = true
+            this.ui_boy.active = true
         }
 
         this.curwin = Math.round(Math.random()) + 1
@@ -97,9 +184,49 @@ export default class NewClass extends cc.Component {
     gameSelectInit (winnum: number): void {
         if(winnum === 1) {
             // 左赢
+            this.girl_left_head.getComponent(cc.Sprite).spriteFrame = this.girl_good
+            this.girl_right_head.getComponent(cc.Sprite).spriteFrame = this.girl_bad
+            this.boy_left_head.getComponent(cc.Sprite).spriteFrame = this.boy_good
+            this.boy_right_head.getComponent(cc.Sprite).spriteFrame = this.boy_bad
         } else {
             // 右赢
+            this.girl_left_head.getComponent(cc.Sprite).spriteFrame = this.girl_bad
+            this.girl_right_head.getComponent(cc.Sprite).spriteFrame = this.girl_good
+            this.boy_left_head.getComponent(cc.Sprite).spriteFrame = this.boy_bad
+            this.boy_right_head.getComponent(cc.Sprite).spriteFrame = this.boy_good
         }
+        this.confirm_block.active=true
+    }
+
+    // 游戏重置
+    gameReset(): void {
+        this.curtain_block.getComponent(cc.Animation).play('curtain_down');
+        this.scheduleOnce(() => {
+            this.cur_sex_boy.active = false
+            this.ui_girl.active = false
+            this.cur_sex_girl.active = false
+            this.ui_boy.active = false
+            this.boy_mask.active = true
+            this.girl_mask.active = true
+            this.gameInit(this.curselectsex)
+        }, 2)
+    }
+
+    // 揭开
+    hideMask(e:any, customEventData: string): void {
+        console.log(customEventData)
+        this.confirm_block.active=false
+        if(customEventData === this.curwin.toString()){
+            this.minecoinnum += this.curcoinnum 
+        } else {
+            this.minecoinnum -= this.curcoinnum 
+        }
+        this.mycoin.getComponent(cc.Label).string = this.minecoinnum.toString()
+        this.boy_mask.active = false
+        this.girl_mask.active = false
+        this.scheduleOnce(() => {
+            this.gameReset();
+        }, 3)
     }
 
     // 打开协议
