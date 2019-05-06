@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "curtain",
+  "_name": "curtain_up",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.5,
@@ -18,7 +18,8 @@
           "frame": 0.5,
           "value": 850
         }
-      ]
+      ],
+      "x": []
     }
   },
   "events": []
