@@ -97,6 +97,21 @@ export default class NewClass extends cc.Component {
     @property({
         type: cc.Node
     })
+    award_block: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    award_tips: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
+    oops_tips: cc.Node = null;
+
+    @property({
+        type: cc.Node
+    })
     coin_bt: Array<cc.Node> = []
 
     @property({
@@ -208,6 +223,8 @@ export default class NewClass extends cc.Component {
             this.ui_boy.active = false
             this.boy_mask.active = true
             this.girl_mask.active = true
+            this.award_block.active = false
+            this.oops_tips.active = false
             this.gameInit(this.curselectsex)
         }, 2)
     }
@@ -218,8 +235,11 @@ export default class NewClass extends cc.Component {
         this.confirm_block.active=false
         if(customEventData === this.curwin.toString()){
             this.minecoinnum += this.curcoinnum 
+            this.award_block.active = true
+            this.award_tips.getComponent(cc.Label).string = this.curcoinnum.toString()
         } else {
             this.minecoinnum -= this.curcoinnum 
+            this.oops_tips.active = true
         }
         this.mycoin.getComponent(cc.Label).string = this.minecoinnum.toString()
         this.boy_mask.active = false
@@ -237,5 +257,10 @@ export default class NewClass extends cc.Component {
     // 关闭协议
     closePrivacy (): void{
         this.privacy_block.active = false        
+    }
+
+    // 返回性别选择
+    backToSex () : void {
+        this.sex_select_page.active = true
     }
 }
