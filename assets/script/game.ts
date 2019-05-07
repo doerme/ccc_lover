@@ -223,8 +223,10 @@ export default class NewClass extends cc.Component {
             this.ui_girl.active = false
             this.cur_sex_girl.active = false
             this.ui_boy.active = false
-            this.boy_mask.active = true
-            this.girl_mask.active = true
+            // this.boy_mask.active = true
+            // this.girl_mask.active = true
+            this.boy_mask.getComponent(cc.Animation).setCurrentTime(0,'mask_hide')
+        this.girl_mask.getComponent(cc.Animation).setCurrentTime(0,'mask_hide')
             this.award_block.active = false
             this.oops_tips.active = false
             this.gameInit(this.curselectsex)
@@ -244,8 +246,10 @@ export default class NewClass extends cc.Component {
             this.oops_tips.active = true
         }
         this.mycoin.getComponent(cc.Label).string = this.minecoinnum.toString()
-        this.boy_mask.active = false
-        this.girl_mask.active = false
+        this.boy_mask.getComponent(cc.Animation).play('mask_hide')
+        this.girl_mask.getComponent(cc.Animation).play('mask_hide')
+        // this.boy_mask.active = false
+        // this.girl_mask.active = false
         this.scheduleOnce(() => {
             this.gameReset();
         }, 3)
@@ -263,6 +267,7 @@ export default class NewClass extends cc.Component {
 
     // 返回性别选择
     backToSex () : void {
+        this.gameReset()
         this.sex_select_page.active = true
     }
 }

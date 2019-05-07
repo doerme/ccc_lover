@@ -26,7 +26,7 @@
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
-    "portrait": false,
+    "portrait": true,
     "upsideDown": false
   },
   "packageName": "org.cocos2d.ccc_lover",
@@ -36,7 +36,7 @@
     "zip": false
   },
   "startScene": "5ce580ec-92f3-41c8-b27a-92f46894ee2b",
-  "title": "ccc_lover",
+  "title": "Looking_For_Lover",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
