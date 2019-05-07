@@ -185,10 +185,12 @@ export default class NewClass extends cc.Component {
         if(selectSex === '1') {
             this.cur_sex_boy.active = true
             this.ui_girl.active = true
+            this.ui_boy.active = false
         }else{
             this.cur_sex_girl.active = true
             this.cur_sex_color.color = new cc.Color(208,47,106) //(208,47,106)
             this.ui_boy.active = true
+            this.ui_girl.active = false
         }
 
         this.curwin = Math.round(Math.random()) + 1
